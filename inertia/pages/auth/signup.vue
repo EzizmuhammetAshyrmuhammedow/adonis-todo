@@ -1,67 +1,53 @@
 <script setup lang="ts">
 import { Form } from '@adonisjs/inertia/vue'
+import Card from 'primevue/card'
+import InputText from 'primevue/inputtext'
+import Password from 'primevue/password'
+import Button from 'primevue/button'
 </script>
 
 <template>
-  <div class="form-container">
-    <div>
-      <h1>Signup</h1>
-      <p>Enter your details below to create your account</p>
-    </div>
+  <div class="flex min-h-screen items-center justify-center p-4">
+    <Card class="w-full max-w-sm">
+      <template #title>
+        <h1 class="text-2xl font-bold">Signup</h1>
+      </template>
+      <template #subtitle>
+        <p class="text-sm">Enter your details below to create your account</p>
+      </template>
+      <template #content>
+        <Form v-slot="{ processing, errors }" route="new_account.store" class="flex flex-col gap-4">
 
-    <div>
-      <Form v-slot="{ processing, errors }" route="new_account.store">
-        <div>
-          <label for="fullName">Full name</label>
-          <input
-            id="fullName"
-            type="text"
-            name="fullName"
-            :data-invalid="errors.fullName ? 'true' : undefined"
-          />
-          <div v-if="errors.fullName">{{ errors.fullName }}</div>
-        </div>
+          <div class="flex flex-col gap-2">
+            <label for="fullName">Full name</label>
+            <InputText id="fullName" name="fullName" type="text" :invalid="!!errors.fullName" />
+            <small v-if="errors.fullName" class="text-red-500">{{ errors.fullName }}</small>
+          </div>
 
-        <div>
-          <label for="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            autocomplete="email"
-            :data-invalid="errors.email ? 'true' : undefined"
-          />
-          <div v-if="errors.email">{{ errors.email }}</div>
-        </div>
+          <div class="flex flex-col gap-2">
+            <label for="email">Email</label>
+            <InputText id="email" name="email" type="email" autocomplete="email" :invalid="!!errors.email" />
+            <small v-if="errors.email" class="text-red-500">{{ errors.email }}</small>
+          </div>
 
-        <div>
-          <label for="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            autocomplete="new-password"
-            :data-invalid="errors.password ? 'true' : undefined"
-          />
-          <div v-if="errors.password">{{ errors.password }}</div>
-        </div>
+          <div class="flex flex-col gap-2">
+            <label for="password">Password</label>
+            <Password id="password" name="password" autocomplete="new-password" :invalid="!!errors.password" toggleMask
+              class="w-full" inputClass="w-full" />
+            <small v-if="errors.password" class="text-red-500">{{ errors.password }}</small>
+          </div>
 
-        <div>
-          <label for="passwordConfirmation">Confirm password</label>
-          <input
-            id="passwordConfirmation"
-            type="password"
-            name="passwordConfirmation"
-            autocomplete="new-password"
-            :data-invalid="errors.passwordConfirmation ? 'true' : undefined"
-          />
-          <div v-if="errors.passwordConfirmation">{{ errors.passwordConfirmation }}</div>
-        </div>
+          <div class="flex flex-col gap-2">
+            <label for="passwordConfirmation">Confirm password</label>
+            <Password id="passwordConfirmation" name="passwordConfirmation" autocomplete="new-password"
+              :invalid="!!errors.passwordConfirmation" :feedback="false" toggleMask class="w-full"
+              inputClass="w-full" />
+            <small v-if="errors.passwordConfirmation" class="text-red-500">{{ errors.passwordConfirmation }}</small>
+          </div>
 
-        <div>
-          <button type="submit" class="button" :disabled="processing">Sign up</button>
-        </div>
-      </Form>
-    </div>
+          <Button type="submit" label="Sign up" :loading="processing" class="mt-2" />
+        </Form>
+      </template>
+    </Card>
   </div>
 </template>
