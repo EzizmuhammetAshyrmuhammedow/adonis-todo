@@ -7,6 +7,27 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class TaskSchema extends BaseModel {
+  static $columns = ['createdAt', 'description', 'dueDate', 'id', 'isCompleted', 'title', 'updatedAt', 'userId'] as const
+  $columns = TaskSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare description: string | null
+  @column.dateTime()
+  declare dueDate: DateTime | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isCompleted: boolean | null
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number | null
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns
