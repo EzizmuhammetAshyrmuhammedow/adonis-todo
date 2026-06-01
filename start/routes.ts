@@ -26,5 +26,6 @@ router
 router
   .group(() => {
     router.post('logout', [controllers.Session, 'destroy'])
+    router.get('tasks', [controllers.Tasks, 'index'])
   })
   .use(middleware.auth())

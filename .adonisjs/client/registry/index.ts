@@ -42,6 +42,12 @@ const routes = {
     tokens: [{"old":"/logout","type":0,"val":"logout","end":""}],
     types: placeholder as Registry['session.destroy']['types'],
   },
+  'tasks.index': {
+    methods: ["GET","HEAD"],
+    pattern: '/tasks',
+    tokens: [{"old":"/tasks","type":0,"val":"tasks","end":""}],
+    types: placeholder as Registry['tasks.index']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }
